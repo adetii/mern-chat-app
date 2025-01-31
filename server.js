@@ -2,17 +2,16 @@ import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 
-import authRoutes from "./routes/auth.routes.js";
-import messageRoutes from "./routes/message.routes.js";
-import userRoutes from "./routes/user.routes.js";
+import authRoutes from "./backend/routes/auth.routes.js";
+import messageRoutes from "./backend/routes/message.routes.js";
+import userRoutes from "./backend/routes/user.routes.js";
 
 
-import connectToMongoDB from "./db/connectToMongoDB.js";
+import connectToMongoDB from "./backend/db/connectToMongoDB.js";
+dotenv.config();
 
 const app = express ();
 const PORT = process.env.PORT || 5500;
-
-dotenv.config();
 
 app.use(express.json());
 app.use(cookieParser());
@@ -25,7 +24,6 @@ app.use("/api/users",userRoutes);
 //    // root route http://localhost:5500/
 //   res.send("Hello World!") 
 //});
-
 
 
 app.listen(PORT, () =>{

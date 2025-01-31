@@ -20,11 +20,15 @@ const userSchema = new mongoose.Schema({
         required: true,
         enum: ["male", "female"]
     },
+    dob: {
+        type: Date, // Date type for storing birth date
+        required: true
+    },
     profile: {
         type: String,
         default: "",
     },
-}, { timestamps: true }); // Moved timestamps configuration inside the schema definition
+}, { timestamps: true }); // Timestamps for createdAt & updatedAt
 
 const User = mongoose.model("User", userSchema);
 

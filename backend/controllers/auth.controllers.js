@@ -1,10 +1,12 @@
+// auth.controllers.js
 import bcrypt from 'bcryptjs';
 import User from "../models/user.models.js";
 import generateTokenAndSetCookie from '../utils/generateToken.js';
 
+// Signup function (requiring dob)
 export const signup = async (req, res) => {
     try {
-        const { fullname, username, password, confirmPassword, gender } = req.body;
+        const { fullname, username, password, confirmPassword, gender, dob } = req.body;
 
         if (password !== confirmPassword) {
             return res.status(400).json({ error: "Passwords don't match" });
@@ -26,13 +28,12 @@ export const signup = async (req, res) => {
             ? `https://avatar.iran.liara.run/public/boy?username=${username}`
             : `https://avatar.iran.liara.run/public/girl?username=${username}`;
 
-        console.log("Generated profile URL:", profile);
-
         const newUser = new User({
             fullname,
             username,
             password: hashedPassword,
             gender: validGender,
+            dob,  // Added date of birth
             profile,
         });
 
@@ -44,6 +45,7 @@ export const signup = async (req, res) => {
                 _id: newUser._id,
                 fullname: newUser.fullname,
                 username: newUser.username,
+                dob: newUser.dob, // Sending date of birth in response
                 profile: newUser.profile,
             });
         } else {
@@ -55,6 +57,7 @@ export const signup = async (req, res) => {
     }
 };
 
+// Login function (requiring dob)
 export const login = async (req, res) => {
     try {
         const { username, password } = req.body;
@@ -70,6 +73,7 @@ export const login = async (req, res) => {
             _id: user._id,
             fullname: user.fullname,
             username: user.username,
+            dob: user.dob, // Sending date of birth in response
             profile: user.profile,
         });
     } catch (error) {
@@ -78,6 +82,7 @@ export const login = async (req, res) => {
     }
 };
 
+// Logout function
 export const logout = (req, res) => {
     res.clearCookie("jwt");
     res.status(200).json({ message: "User logged out successfully" });
