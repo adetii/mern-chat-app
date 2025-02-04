@@ -6,9 +6,9 @@ import generateTokenAndSetCookie from '../utils/generateToken.js';
 // Signup function (requiring dob)
 export const signup = async (req, res) => {
     try {
-        const { fullname, username, password, confirmPassword, gender, dob } = req.body;
+        const { fullName, username, gender, dob, password, confirmedPassword,  } = req.body;
 
-        if (password !== confirmPassword) {
+        if (password !== confirmedPassword) {
             return res.status(400).json({ error: "Passwords don't match" });
         }
 
@@ -29,11 +29,11 @@ export const signup = async (req, res) => {
             : `https://avatar.iran.liara.run/public/girl?username=${username}`;
 
         const newUser = new User({
-            fullname,
+            fullName,
             username,
-            password: hashedPassword,
             gender: validGender,
             dob,  // Added date of birth
+            password: hashedPassword,
             profile,
         });
 
@@ -43,7 +43,7 @@ export const signup = async (req, res) => {
 
             res.status(201).json({
                 _id: newUser._id,
-                fullname: newUser.fullname,
+                fullName: newUser.fullName,
                 username: newUser.username,
                 dob: newUser.dob, // Sending date of birth in response
                 profile: newUser.profile,
@@ -71,7 +71,7 @@ export const login = async (req, res) => {
 
         res.status(200).json({
             _id: user._id,
-            fullname: user.fullname,
+            fullName: user.fullName,
             username: user.username,
             dob: user.dob, // Sending date of birth in response
             profile: user.profile,

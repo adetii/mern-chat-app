@@ -1,22 +1,26 @@
-import GenderCheckBox from "./GenderCheckBox"; // Fixed import name to match the file correctly
+import GenderCheckBox from "./GenderCheckbox.jsx";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import useSignup from "../../hooks/useSignup";
 
 const Signup = () => {
   const [inputs, setInputs] = useState({
-    fullname: "",
+    fullName: "",
     username: "",
-    password: "",
-    confirmedPassword: "",
     gender: "",
     dob: "",
+    password: "",
+    confirmedPassword: "",
   });
 
   const { loading, signup } = useSignup();
 
   const handleCheckBoxChange = (gender) => {
-    setInputs({...inputs, gender });
+    setInputs((prev) => ({ ...prev, gender }));
+  };
+
+  const handleChange = (e) => {
+    setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value.trim() }));
   };
 
   const handleSubmit = async (e) => {
@@ -38,10 +42,11 @@ const Signup = () => {
             </label>
             <input
               type="text"
+              name="fullName"
               placeholder="Enter full name"
               className="w-full input input-bordered h-10"
-              value={inputs.fullname}
-              onChange={(e) => setInputs({ ...inputs, fullname: e.target.value })}
+              value={inputs.fullName}
+              onChange={handleChange}
             />
           </div>
 
@@ -51,36 +56,11 @@ const Signup = () => {
             </label>
             <input
               type="text"
+              name="username"
               placeholder="Enter username"
               className="w-full input input-bordered h-10"
               value={inputs.username}
-              onChange={(e) => setInputs({ ...inputs, username: e.target.value })}
-            />
-          </div>
-
-          <div>
-            <label className="label p-2">
-              <span className="text-base label-text">Password</span>
-            </label>
-            <input
-              type="password"
-              placeholder="Enter password"
-              className="w-full input input-bordered h-10"
-              value={inputs.password}
-              onChange={(e) => setInputs({ ...inputs, password: e.target.value })}
-            />
-          </div>
-
-          <div>
-            <label className="label p-2">
-              <span className="text-base label-text">Confirm Password</span>
-            </label>
-            <input
-              type="password"
-              placeholder="Confirm password"
-              className="w-full input input-bordered h-10"
-              value={inputs.confirmedPassword}
-              onChange={(e) => setInputs({ ...inputs, confirmedPassword: e.target.value })}
+              onChange={handleChange}
             />
           </div>
 
@@ -92,9 +72,38 @@ const Signup = () => {
             </label>
             <input
               type="date"
+              name="dob"
               className="w-full input input-bordered h-10"
               value={inputs.dob}
-              onChange={(e) => setInputs({ ...inputs, dob: e.target.value })}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div>
+            <label className="label p-2">
+              <span className="text-base label-text">Password</span>
+            </label>
+            <input
+              type="password"
+              name="password"
+              placeholder="Enter password"
+              className="w-full input input-bordered h-10"
+              value={inputs.password}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div>
+            <label className="label p-2">
+              <span className="text-base label-text">Confirm Password</span>
+            </label>
+            <input
+              type="password"
+              name="confirmedPassword"
+              placeholder="Confirm password"
+              className="w-full input input-bordered h-10"
+              value={inputs.confirmedPassword}
+              onChange={handleChange}
             />
           </div>
 
@@ -114,7 +123,7 @@ const Signup = () => {
               className="w-full h-10 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition"
               disabled={loading} // Prevents multiple submissions while loading
             >
-              Signup
+              {loading ? "Signing Up..." : "Signup"}
             </button>
           </div>
         </form>
@@ -124,6 +133,7 @@ const Signup = () => {
 };
 
 export default Signup;
+
 
 
 

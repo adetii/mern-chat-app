@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
-    fullname: {
+    fullName: {
         type: String,
         required: true
     },
@@ -9,11 +9,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true
-    },
-    password: {
-        type: String,
-        required: true,
-        minlength: 8
     },
     gender: {
         type: String,
@@ -23,6 +18,11 @@ const userSchema = new mongoose.Schema({
     dob: {
         type: Date, // Date type for storing birth date
         required: true
+    },
+    password: {
+        type: String,
+        required: true,
+        minlength: 8
     },
     profile: {
         type: String,

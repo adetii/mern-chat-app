@@ -4,52 +4,55 @@ import toast from "react-hot-toast";
 const useSignup = () => {
     const [loading, setLoading] = useState(false);
 
-    const signup = async ({ fullName, username, password, confirmedPassword, gender, dob }) => {
-        const success = handleInputErrors({ fullName, username, password, confirmedPassword, gender, dob });
+    const signup = async ({ fullName, username, gender, dob, password, confirmedPassword }) => {
+        // Trim input values to avoid extra spaces
+        password = password.trim();
+        confirmedPassword = confirmedPassword.trim();
 
-        if (!success) return;
+        // Debugging: Console log values
+        console.log("Password:", password);
+        console.log("Confirmed Password:", confirmedPassword);
+
+        if (!handleInputErrors({ fullName, username, gender, dob, password, confirmedPassword })) return;
 
         setLoading(true);
         try {
-            const res = await fetch('http://localhost:5500/api/auth/signup', {
+            const res = await fetch("http://localhost:5500/api/auth/signup", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ fullName, username, password, gender, dob }) // Sending only required data
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ fullName, username, gender, dob, password, confirmedPassword })
             });
 
             const data = await res.json();
+            console.log(data);
+
             if (!res.ok) {
-                throw new Error(data.message || "Signup failed");
+                throw new Error(data.error || data.message || "Signup failed");
             }
 
             toast.success("Signup successful!");
         } catch (error) {
-            toast.error(error.message);
+            console.error("Signup Error:", error);
+            toast.error(error?.message || "Something went wrong");
         } finally {
             setLoading(false);
-        }        
+        }
     };
 
-    return { signup, loading };
+    return { loading, signup };
 };
 
 export default useSignup;
 
-function handleInputErrors({ fullName, username, password, confirmedPassword, gender, dob }) {
-    if (!fullName || !username || !password || !confirmedPassword || !gender || !dob) {
-        toast.error('Please fill in all the fields');
+function handleInputErrors({ fullName, username, gender, dob, password, confirmedPassword }) {
+    if (!fullName || !username || !gender || !dob || !password || !confirmedPassword) {
+        toast.error("All fields are required.");
         return false;
     }
 
     if (password !== confirmedPassword) {
-        toast.error('Passwords do not match');
-        return false;
-    }
-
-    if (password.length < 8) {
-        toast.error('Password must be at least 8 characters');
+        console.error("Passwords do not match:", password, confirmedPassword);
+        toast.error("Passwords do not match.");
         return false;
     }
 
