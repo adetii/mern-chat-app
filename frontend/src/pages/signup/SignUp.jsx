@@ -20,7 +20,7 @@ const Signup = () => {
   };
 
   const handleChange = (e) => {
-    setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value.trim() }));
+    setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value })); // Removed .trim()
   };
 
   const handleSubmit = async (e) => {
