@@ -1,7 +1,9 @@
-import { createContext, useContext } from 'react';
+// src/context/AuthContext.js
+import { createContext, useContext } from "react";
 
 export const AuthContext = createContext();
 
-export const useAuthContext = () => { // ✅ Fix: Correct function name casing
-    return useContext(AuthContext);
+// Create and export the hook here
+export const useAuthContext = () => {
+  return useContext(AuthContext);
 };

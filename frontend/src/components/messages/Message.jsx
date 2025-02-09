@@ -10,7 +10,8 @@ const Message = ({ message }) => {
   const formattedTime = extractTime(message.createdAt);
   const chatClassName = fromMe ? 'chat-end' : 'chat-start';
   const profile = fromMe ? authUser.profile : selectedConversation?.profile || '/default-avatar.png'; // Fallback profile
-  const bubbleBgColor = fromMe ? 'bg-blue-500' : 'bg-gray-700';
+  const bubbleBgColor = fromMe ? 'bg-blue-500' : 'bg-gray-900';
+  const shakeClass = message.shouldShake ? "shake" : ""
 
   return (
     <div className={`chat ${chatClassName}`}>
@@ -22,7 +23,7 @@ const Message = ({ message }) => {
       </div>
 
       {/* Message Content */}
-      <div className={`chat-bubble text-white ${bubbleBgColor}`}>
+      <div className={`chat-bubble text-white ${bubbleBgColor} ${shakeClass}`}>
         {message.message}
       </div>
 
