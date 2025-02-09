@@ -1,7 +1,7 @@
 import Conversation from "../models/conversation.models.js";
 import Message from "../models/message.models.js";
 import { getReceiverSocketId } from "../socket/socket.js";
-import { io } from "../../server.js";
+import { io } from '../server.js';
 
 
 

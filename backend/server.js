@@ -4,11 +4,11 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
-import authRoutes from "./backend/routes/auth.routes.js";
-import messageRoutes from "./backend/routes/message.routes.js";
-import userRoutes from "./backend/routes/user.routes.js";
-import connectToMongoDB from "./backend/db/connectToMongoDB.js";
-import { app, io, server } from "./backend/socket/socket.js"; // ✅ Fixed path
+import authRoutes from "./routes/auth.routes.js";
+import messageRoutes from "./routes/message.routes.js";
+import userRoutes from "./routes/user.routes.js";
+import connectToMongoDB from "./db/connectToMongoDB.js";
+import { app, io, server } from "./socket/socket.js"; // ✅ Fixed path
 
 dotenv.config();
 
@@ -37,3 +37,4 @@ server.listen(PORT, () => {
 
 // ✅ Fix: Export io so other files can import it
 export { io };
+export default server; // If `app` is your Express instance
