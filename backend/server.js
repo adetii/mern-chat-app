@@ -37,4 +37,4 @@ server.listen(PORT, () => {
 
 // ✅ Fix: Export io so other files can import it
 export { io };
-export default server; // If `app` is your Express instance
+ // If `app` is your Express instance
