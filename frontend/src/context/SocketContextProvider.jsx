@@ -17,7 +17,7 @@ export const SocketContextProvider = ({ children }) => {
         if (!authUser) return; // Ensure user is authenticated
 
         const socket = io("https://my-chat-app-production.onrender.com", {
-            query: { userId: authUser._id }, // Attach userId to query
+            query: { userId: authUser._id }, // Attach userId to queryyyy
         });
 
         setSocket(socket); // Store socket in state
